@@ -9,6 +9,7 @@ on:
     paths:
       - 'greenbox_integration/Dockerfile'
       - 'greenbox_integration/uv.lock'
+      - 'greenbox_integration/greenbox_bridge.py'
       - 'greenbox_integration/pyproject.toml'
 
 jobs:

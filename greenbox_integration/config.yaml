@@ -19,6 +19,7 @@ options:
   mqtt_pass: ""
   device_id: "greenbox_berlin"
   device_name: "Greenbox"
+  debug: false
 
 schema:
   ble_address: str
@@ -27,3 +28,4 @@ schema:
   mqtt_pass: str?
   device_id: str
   device_name: str
+  debug: bool

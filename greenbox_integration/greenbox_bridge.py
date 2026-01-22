@@ -5,17 +5,16 @@ import logging
 import paho.mqtt.client as mqtt
 from bleak import BleakClient
 
+CONF = get_config()
+
 # --- LOGGING SETUP ---
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+log_level = logging.DEBUG if CONF.get("debug", False) else logging.INFO
+logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("GreenboxBridge")
 
 # --- CONFIGURATION ---
 def get_config():
     """Lädt Konfiguration aus HA-Optionen oder nutzt lokale Test-Werte."""
-    # options_path = "/data/options.json"
     options_path = "data/options.json"
     if os.path.exists(options_path):
         with open(options_path, "r") as f:
@@ -26,10 +25,11 @@ def get_config():
         "mqtt_user": "",
         "mqtt_pass": "",
         "device_id": "greenbox_berlin",
-        "device_name": "Greenbox Berlin"
+        "device_name": "Greenbox Berlin",
+        "debug": True  # beim debugging am PC standardmäßig an
     }
 
-CONF = get_config()
+
 UUID_DATA = "0000ff05-0000-1000-8000-00805f9b34fb"
 
 # Mapping der IDs auf Sensor-Namen
@@ -112,6 +112,8 @@ class GreenboxBridge:
         logger.info("HA Discovery Nachrichten gesendet.")
 
     async def handle_ble_notification(self, sender, data):
+
+        logger.debug(f"BLE Raw Data: {data.hex()}")
         """Verarbeitet eingehende Bluetooth-Pakete."""
         if len(data) == 6 and data[0] == 0xee and data[5] == 0xef:
             msg_id, val_h, val_l, cs = data[1], data[2], data[3], data[4]
@@ -120,6 +122,10 @@ class GreenboxBridge:
             if (msg_id + val_h + val_l + cs) % 256 == (291 % 256):
                 val = (val_h << 8) | val_l
                 key = ID_MAP.get(msg_id)
+
+                if key:
+                    logger.debug(f"Gültiges Paket: {key} = {val}")
+
                 if not key: return
 
                 self.states[key] = val

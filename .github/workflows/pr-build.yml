@@ -38,7 +38,7 @@ jobs:
           push: false
           tags: temp/pr-build:latest
 
-      - name: Test Python code
+      - name: Test Python code Compilation
         run: |
           cd greenbox_integration
           pip install uv

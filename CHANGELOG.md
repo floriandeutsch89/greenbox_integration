@@ -10,6 +10,9 @@ TLDR:
 - Features 0.1.0 (Minor Version)
 - Breaking Changes 1.0.0 (Major Version)
 
+## 1.0.2
+- changelog test
+
 ## 1.0.1
 - Added debugging options
 - Added Auto-Release based on changelog.md

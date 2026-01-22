@@ -5,13 +5,6 @@ import logging
 import paho.mqtt.client as mqtt
 from bleak import BleakClient
 
-CONF = get_config()
-
-# --- LOGGING SETUP ---
-log_level = logging.DEBUG if CONF.get("debug", False) else logging.INFO
-logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger("GreenboxBridge")
-
 # --- CONFIGURATION ---
 def get_config():
     """Lädt Konfiguration aus HA-Optionen oder nutzt lokale Test-Werte."""
@@ -29,6 +22,12 @@ def get_config():
         "debug": True  # beim debugging am PC standardmäßig an
     }
 
+CONF = get_config()
+
+# --- LOGGING SETUP ---
+log_level = logging.DEBUG if CONF.get("debug", False) else logging.INFO
+logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger("GreenboxBridge")
 
 UUID_DATA = "0000ff05-0000-1000-8000-00805f9b34fb"
 

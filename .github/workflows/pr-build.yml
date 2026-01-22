@@ -1,4 +1,4 @@
-name: Docker Build Check
+name: Docker & Python Build Check
 
 on:
   workflow_dispatch:
@@ -37,6 +37,22 @@ jobs:
           load: true
           push: false
           tags: temp/pr-build:latest
+
+      - name: Test Python code Compilation
+        run: |
+          cd greenbox_integration
+          pip install uv
+          uv sync
+          uv run python greenbox_bridge.py &
+          PID=$!
+          sleep 5
+          if kill -0 $PID 2>/dev/null; then
+            echo "Script started successfully"
+            kill $PID
+          else
+            echo "Script failed to start"
+            exit 1
+          fi
 
       - name: Remove temp image
         run: docker rmi temp/pr-build:latest

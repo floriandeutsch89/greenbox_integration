@@ -10,12 +10,27 @@ TLDR:
 - Features 0.1.0 (Minor Version)
 - Breaking Changes 1.0.0 (Major Version)
 
-## 1.0.2
+## 1.0.3 - 2026-01-23
+
+### Added
+- Github Workflow for python execution to avoid future errors
+
+### Changed
+- CHANGELOG Version Detection for github PR workflow
+
+### Fixed
+- Bugfix Python Package
+
+## 1.0.2 - 2026-01-23
+
+### Removed
 - changelog test
 
-## 1.0.1
-- Added debugging options
-- Added Auto-Release based on changelog.md
+## 1.0.1 - 2026-01-23
 
-## 1.0.0
+### Added
+- debugging options
+- Auto-Release based on changelog.md
+
+## 1.0.0 - 2026-01-23
 - Initial Release

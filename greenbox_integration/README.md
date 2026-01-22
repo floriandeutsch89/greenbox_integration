@@ -40,6 +40,18 @@
 ##  Konfiguration 
  
  Im Reiter Konfiguration müssen die ble_address und die MQTT-Zugangsdaten deines HA-Users hinterlegt werden. 
+
+In den Add-on Optionen kannst du folgende Einstellungen vornehmen: 
+ 
+ * ble_address: MAC-Adresse deiner Box. 
+ * mqtt_host: Host deines Brokers (Standard: core-mosquitto). 
+ * debug: (Boolean) Aktiviert ausführliche Logs. 
+ 
+ ## Fehlersuche (Debug-Mode) 
+ 
+ Wenn keine Daten in Home Assistant ankommen, aktiviere den debug-Modus in der Add-on Konfiguration und starte das Add-on neu. 
+ 
+ Im Reiter Protokoll siehst du dann jede einzelne Bluetooth-Nachricht (BLE Raw Data), die von der Box empfangen wird. Dies hilft festzustellen, ob die Verbindung physikalisch besteht, aber die Datenverarbeitung (z.B. Checksumme) fehlschlägt.
  
  ## Technische Spezifikationen (Reverse Engineering) 
  

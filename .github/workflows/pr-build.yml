@@ -38,6 +38,13 @@ jobs:
           push: false
           tags: temp/pr-build:latest
 
+      - name: Test Python code
+        run: |
+          cd greenbox_integration
+          pip install uv
+          uv sync
+          timeout 10s python greenbox_bridge.py || true
+
       - name: Remove temp image
         run: docker rmi temp/pr-build:latest
 

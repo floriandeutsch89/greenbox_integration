@@ -8,7 +8,7 @@ from bleak import BleakClient
 # --- CONFIGURATION ---
 def get_config():
     """Lädt Konfiguration aus HA-Optionen oder nutzt lokale Test-Werte."""
-    options_path = "data/options.json"
+    options_path = "/data/options.json"
     if os.path.exists(options_path):
         with open(options_path, "r") as f:
             return json.load(f)
@@ -25,7 +25,7 @@ def get_config():
 CONF = get_config()
 
 # --- LOGGING SETUP ---
-log_level = logging.DEBUG if CONF.get("debug", False) else logging.INFO
+log_level = logging.DEBUG if CONF.get("debug") is True else logging.INFO
 logging.basicConfig(level=log_level, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("GreenboxBridge")
 

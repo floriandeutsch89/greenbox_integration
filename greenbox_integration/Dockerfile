@@ -1,7 +1,4 @@
-# Builder-Stage für uv
-FROM astral-sh/uv:latest AS uv_bin
-
-# Basis-Image
+# Basis-Image: Aktuelles Python 3.13
 FROM python:3.13-slim-bookworm
 
 # Labels für Home Assistant
@@ -12,21 +9,20 @@ LABEL \
   io.hass.type="addon" \
   io.hass.version="1.0.0"
 
-# Kopiere uv
-COPY --from=uv_bin /uv /uvx /bin/
-
-# System-Abhängigkeiten für Bluetooth
-# Wir benötigen dbus, um mit dem Bluetooth-Stack des Hosts zu sprechen
+# System-Abhängigkeiten installieren
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bluez \
     dbus \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
 
+RUN pip install --no-cache-dir --upgrade uv
+
 WORKDIR /app
 
-# Installiere Abhängigkeiten
-# Da wir im Container sind, nutzen wir --system
+# Abhängigkeiten mit uv installieren
+# Wir kopieren die pyproject.toml nur, wenn sie existiert, 
+# ansonsten installieren wir die Pakete direkt.
 RUN uv pip install --system bleak paho-mqtt
 
 # Script kopieren

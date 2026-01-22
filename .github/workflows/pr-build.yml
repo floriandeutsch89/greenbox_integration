@@ -1,0 +1,42 @@
+name: Docker Build Check
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'greenbox_integration/Dockerfile'
+      - 'greenbox_integration/uv.lock'
+      - 'greenbox_integration/pyproject.toml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image (amd64)
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: greenbox_integration
+          file: greenbox_integration/Dockerfile
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: temp/pr-build:latest
+
+      - name: Remove temp image
+        run: docker rmi temp/pr-build:latest
+

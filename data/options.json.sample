@@ -1,0 +1,8 @@
+{
+  "ble_address": "8C:4B:14:84:DB:72",
+  "mqtt_host": "localhost",
+  "mqtt_user": "user",
+  "mqtt_pass": "password",
+  "device_id": "GreenBox8C4B1484",
+  "device_name": "Greenbox"
+}

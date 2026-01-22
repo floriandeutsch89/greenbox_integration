@@ -43,7 +43,7 @@ jobs:
           cd greenbox_integration
           pip install uv
           uv sync
-          timeout 10s python greenbox_bridge.py || true
+          timeout 10s uv run python greenbox_bridge.py || true
 
       - name: Remove temp image
         run: docker rmi temp/pr-build:latest

@@ -10,6 +10,11 @@ TLDR:
 - Features 0.1.0 (Minor Version)
 - Breaking Changes 1.0.0 (Major Version)
 
+## 1.0.4 - 2026-01-23
+
+### Fixed
+- The option for debugging is now correctly working.
+
 ## 1.0.3 - 2026-01-23
 
 ### Added

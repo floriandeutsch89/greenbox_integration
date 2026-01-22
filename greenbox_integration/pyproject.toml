@@ -1,5 +1,5 @@
 [project]
-name = "berlingreen-integration"
+name = "greenbox_integration"
 version = "0.1.0"
 description = "BLE to MQTT Bridge for Greenbox"
 readme = "README.md"

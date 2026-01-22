@@ -29,15 +29,17 @@
  uv run greenbox_bridge.py 
  ```
  
- ## Installation als HA Add-on 
+ ## Installation als Home Assistant Add-on 
+
+ 1. Kopiere die URL dieses GitHub-Repositories. 
+ 2. Gehe in Home Assistant auf Einstellungen -> Add-ons -> Add-on Store. 
+ 3. Klicke oben rechts auf die drei Punkte (Menü) und wähle Repositories. 
+ 4. Füge deine GitHub-URL hinzu und klicke auf Hinzufügen. 
+ 5. Installiere die "Greenbox MQTT Bridge". 
  
- Kopiere folgende Dateien in den Ordner /addons/greenbox-bridge/: 
- * Dockerfile (Python 3.13 + uv) 
- * config.yaml (Berechtigungen für host_dbus und host_network) 
- * greenbox_bridge.py 
- * pyproject.toml 
+##  Konfiguration 
  
- Nach einem Klick auf "Nach Updates suchen" im Add-on Store kann die Bridge als lokales Add-on installiert werden. 
+ Im Reiter Konfiguration müssen die ble_address und die MQTT-Zugangsdaten deines HA-Users hinterlegt werden. 
  
  ## Technische Spezifikationen (Reverse Engineering) 
  

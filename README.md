@@ -7,7 +7,7 @@
  * blueprints/: Gebrauchsfertige Automatisierungsvorlagen (z. B. für Wasserstands-Warnungen). 
  * repository.yaml: Die Konfigurationsdatei, damit Home Assistant dieses Repo als Add-on-Quelle erkennt. 
  
- ## 🚀 Schnellstart 
+ ## Schnellstart 
  
  ### 1. Add-on installieren 
  1. Kopiere die URL dieses Repositories von GitHub. 
@@ -27,6 +27,5 @@
  └── blueprints/ # HA Automatisierungs-Vorlagen 
  ```
  
- ## ⚖️ Disclaimer 
+ ## Disclaimer 
  Dies ist ein inoffizielles Community-Projekt. Es besteht keine Verbindung zur BerlinGreen GmbH. Die Nutzung erfolgt auf eigene Gefahr.
- 

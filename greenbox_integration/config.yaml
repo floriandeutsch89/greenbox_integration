@@ -1,5 +1,5 @@
 name: "Greenbox MQTT Bridge"
-version: "1.0.1"
+version: "1.0.2"
 slug: "greenbox_bridge"
 description: "Steuerung der BerlinGreen Greenbox via BLE"
 arch:

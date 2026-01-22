@@ -7,7 +7,7 @@ LABEL \
   io.hass.description="Bluetooth-zu-MQTT Bridge für BerlinGreen Greenbox" \
   io.hass.arch="aarch64|amd64|armv7" \
   io.hass.type="addon" \
-  io.hass.version="1.0.0"
+  io.hass.version="1.0.1"
 
 # System-Abhängigkeiten installieren
 RUN apt-get update && apt-get install -y --no-install-recommends \

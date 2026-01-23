@@ -51,7 +51,7 @@ class GreenboxBridge:
     def __init__(self):
         self.ble_client = None
         self.mqtt_client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
-        self.states = {"light_neutral": 0, "mode_id": 0} # Initialwerte
+        self.states = {}
         self.discovery_sent = False
 
     def calculate_checksum(self, msg_id, val_h, val_l):

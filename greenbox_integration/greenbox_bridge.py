@@ -40,7 +40,7 @@ ID_MAP = {
     0x4f: "mode_id", 
     0x53: "start_weekday",
     0x54: "wifi_status",
-    0x57: "water_level", 
+    0x57: "water_percent", 
     0x64: "duration_weekend", 
     0x66: "unknown_66",
     0x72: "unknown_72",
@@ -51,7 +51,7 @@ class GreenboxBridge:
     def __init__(self):
         self.ble_client = None
         self.mqtt_client = mqtt.Client(callback_api_version=mqtt.CallbackAPIVersion.VERSION2)
-        self.states = {}
+        self.states = {"light_neutral": 0, "mode_id": 0} # Initialwerte
         self.discovery_sent = False
 
     def calculate_checksum(self, msg_id, val_h, val_l):

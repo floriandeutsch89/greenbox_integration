@@ -7,7 +7,7 @@ LABEL \
   io.hass.description="Bluetooth-zu-MQTT Bridge für BerlinGreen Greenbox" \
   io.hass.arch="aarch64|amd64|armv7" \
   io.hass.type="addon" \
-  io.hass.version="1.0.5"
+  io.hass.version="1.0.6"
 
 # System-Abhängigkeiten installieren
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -25,8 +25,17 @@ WORKDIR /app
 # ansonsten installieren wir die Pakete direkt.
 RUN uv pip install --system bleak paho-mqtt
 
+# Create non-root user
+RUN useradd --create-home --shell /bin/sh app
+
 # Script kopieren
 COPY greenbox_bridge.py .
+
+# Change ownership
+RUN chown app:app greenbox_bridge.py
+
+# Switch to non-root user
+USER app
 
 # Startbefehl
 CMD [ "python3", "greenbox_bridge.py" ]

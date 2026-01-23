@@ -10,6 +10,12 @@ TLDR:
 - Features 0.1.0 (Minor Version)
 - Breaking Changes 1.0.0 (Major Version)
 
+## 1.0.5 - 2026-01-24
+
+### Fixed
+- Water level now reports correct values
+- changed blueprint to yaml as needed
+
 ## 1.0.4 - 2026-01-23
 
 ### Fixed

@@ -1,4 +1,4 @@
-## 1.0.7 - 2026-01-24
+## 1.0.8 - 2026-01-24
 
 ### Added
 - AppArmor config to further harden this image

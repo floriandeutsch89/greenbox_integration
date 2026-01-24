@@ -1,16 +1,16 @@
-# Changelog
+## 1.0.7 - 2026-01-24
 
-All notable changes to this project will be documented in this file.
+### Added
+- Icons for this app
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+### Changed
+- removed legacy `full_access` flag
+- Default user is now `ha_user` with UID 1000
 
-TLDR:
-- Bugfixes 0.0.1 (Revision)
-- Features 0.1.0 (Minor Version)
-- Breaking Changes 1.0.0 (Major Version)
+### Fixed
+- fixed `/data/config.json` permission issue.
 
-## 1.0.6 - 2026-01-24
+## 1.0.6 - 2026-01-23
 
 ### Changed
 - Container now runs as non-root user
@@ -18,7 +18,7 @@ TLDR:
 ### Fixed
 - Box randomly turned of its lights ignoring the timer
 
-## 1.0.5 - 2026-01-24
+## 1.0.5 - 2026-01-23
 
 ### Fixed
 - Water level now reports correct values

@@ -1,16 +1,24 @@
 name: "Greenbox MQTT Bridge"
-version: "1.0.6"
+version: "1.0.7"
 slug: "greenbox_bridge"
 description: "Steuerung der BerlinGreen Greenbox via BLE"
 arch:
   - aarch64
   - amd64
   - armv7
+init: false
 startup: "services"
 boot: "auto"
-full_access: true # Wichtig für Bluetooth-Hardwarezugriff
 host_network: true
-host_dbus: true # Erlaubt die Kommunikation mit dem Bluetooth-Dienst des Hosts
+# DBus is required for Bleak/Bluetooth
+host_dbus: true
+# Map /data for persistent storage
+map:
+  - config:rw
+# This allows the container to access Bluetooth hardware
+privileged:
+  - SYS_ADMIN
+  - NET_ADMIN
 
 options:
   ble_address: "8C:4B:14:84:DB:72"

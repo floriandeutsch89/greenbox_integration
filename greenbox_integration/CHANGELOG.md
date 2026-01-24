@@ -1,3 +1,8 @@
+## 1.0.9 - 2026-01-24
+
+### Changed
+- Further AppArmor optimizations
+
 ## 1.0.8 - 2026-01-24
 
 ### Added

@@ -192,7 +192,7 @@ class GreenboxBridge:
                 async with BleakClient(CONF['ble_address'], timeout=20.0) as client:
                     self.ble_client = client
                     await client.start_notify(UUID_DATA, self.handle_ble_notification)
-                    logger.info("BLE aktiv. Warte auf Daten...")
+                    logger.info("BLE aktiv und verbunden. Warte auf NOTIFY-Daten...")
                     
                     while client.is_connected:
                         # Wir schicken alle 60s ein "Keep Alive" (Status-Abfrage ID 4f)

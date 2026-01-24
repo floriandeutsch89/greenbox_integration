@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 import logging
+import sys
 import paho.mqtt.client as mqtt
 from bleak import BleakClient
 
@@ -170,13 +171,17 @@ class GreenboxBridge:
 
     async def mqtt_loop(self):
         """Verwaltet die MQTT-Verbindung."""
-        if CONF['mqtt_user']:
-            self.mqtt_client.username_pw_set(CONF['mqtt_user'], CONF['mqtt_pass'])
-        
-        self.mqtt_client.on_message = self.on_mqtt_message
-        self.mqtt_client.connect(CONF['mqtt_host'], 1883)
-        self.mqtt_client.subscribe(f"{CONF['device_id']}/light/set")
-        self.send_discovery()
+        try:
+            if CONF['mqtt_user']:
+                self.mqtt_client.username_pw_set(CONF['mqtt_user'], CONF['mqtt_pass'])
+            
+            self.mqtt_client.on_message = self.on_mqtt_message
+            self.mqtt_client.connect(CONF['mqtt_host'], 1883)
+            self.mqtt_client.subscribe(f"{CONF['device_id']}/light/set")
+            self.send_discovery()
+        except Exception as e:
+            logger.error(f"MQTT-Verbindung fehlgeschlagen: {e}")
+            sys.exit(1)
 
         while True:
             self.mqtt_client.loop(timeout=0.1)
@@ -192,7 +197,7 @@ class GreenboxBridge:
                 async with BleakClient(CONF['ble_address'], timeout=20.0) as client:
                     self.ble_client = client
                     await client.start_notify(UUID_DATA, self.handle_ble_notification)
-                    logger.info("BLE aktiv. Warte auf Daten...")
+                    logger.info("BLE aktiv und verbunden. Warte auf NOTIFY-Daten...")
                     
                     while client.is_connected:
                         # Wir schicken alle 60s ein "Keep Alive" (Status-Abfrage ID 4f)

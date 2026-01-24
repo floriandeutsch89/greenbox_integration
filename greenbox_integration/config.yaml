@@ -1,5 +1,5 @@
 name: "Greenbox MQTT Bridge"
-version: "1.0.7"
+version: "1.10.1"
 slug: "greenbox_bridge"
 description: "Steuerung der BerlinGreen Greenbox via BLE"
 arch:
@@ -9,16 +9,18 @@ arch:
 init: false
 startup: "services"
 boot: "auto"
-host_network: true
+apparmor: false
+host_network: false
 # DBus is required for Bleak/Bluetooth
 host_dbus: true
 # Map /data for persistent storage
+read_only: true # Makes the root filesystem read-only. can still write to /data
 map:
   - config:rw
 # This allows the container to access Bluetooth hardware
 privileged:
-  - SYS_ADMIN
   - NET_ADMIN
+  - NET_RAW
 
 options:
   ble_address: "8C:4B:14:84:DB:72"

@@ -1,41 +1,36 @@
-# Basis-Image: Aktuelles Python 3.13
 FROM python:3.13-slim-bookworm
 
-# Labels für Home Assistant
 LABEL \
   io.hass.name="Greenbox MQTT Bridge" \
-  io.hass.description="Bluetooth-zu-MQTT Bridge für BerlinGreen Greenbox" \
+  io.hass.description="Bluetooth-to-MQTT Bridge for BerlinGreen Greenbox" \
   io.hass.arch="aarch64|amd64|armv7" \
   io.hass.type="addon" \
-  io.hass.version="1.0.6"
+  io.hass.version="1.0.7"
 
-# System-Abhängigkeiten installieren
+# Install System dependencies + gosu
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bluez \
     dbus \
     libglib2.0-0 \
+    gosu \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir --upgrade uv
 
 WORKDIR /app
 
-# Abhängigkeiten mit uv installieren
-# Wir kopieren die pyproject.toml nur, wenn sie existiert, 
-# ansonsten installieren wir die Pakete direkt.
+# Install dependencies
 RUN uv pip install --system bleak paho-mqtt
 
-# Create non-root user
-RUN useradd --create-home --shell /bin/sh app
+# Create non-root user (using a specific UID is safer for permission mapping)
+RUN useradd -u 1000 --create-home --shell /bin/sh ha_user
 
-# Script kopieren
 COPY greenbox_bridge.py .
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Change ownership
-RUN chown app:app greenbox_bridge.py
+# The entrypoint handles the permission fix and user switch
+ENTRYPOINT ["/entrypoint.sh"]
 
-# Switch to non-root user
-USER app
-
-# Startbefehl
+# The CMD is passed as arguments to the entrypoint.sh
 CMD [ "python3", "greenbox_bridge.py" ]

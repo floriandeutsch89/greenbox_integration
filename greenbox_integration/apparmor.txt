@@ -12,6 +12,8 @@ profile addon_greenbox_bridge flags=(attach_disconnected,mediate_deleted) {
   /data/** rw,
 
   # Grant execute permission to the entrypoint
+  capability chown,   # <--- Allows changing file owner
+  capability fsetid,  # <--- Helps with permission bits during chown
   /entrypoint.sh r,
   /entrypoint.sh ix,  # 'ix' means 'Inherit' this profile for the execution
 

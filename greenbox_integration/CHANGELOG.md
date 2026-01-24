@@ -1,7 +1,7 @@
 ## 1.10.0 - 2026-01-24
 
-### Changed
-- version bump
+### Removed
+- AppArmor (too much effort for now)
 
 ## 1.0.9 - 2026-01-24
 

@@ -9,7 +9,7 @@ arch:
 init: false
 startup: "services"
 boot: "auto"
-apparmor: true
+apparmor: false
 host_network: false
 # DBus is required for Bleak/Bluetooth
 host_dbus: true

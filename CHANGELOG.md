@@ -1,6 +1,15 @@
 ## 1.0.7 - 2026-01-24
 
 ### Added
+- AppArmor config to further harden this image
+
+### Changed
+- removed `SYS_ADMIN` privilege
+- removed `host_network` privilege (we should use `core-mosquitto` by default for ha integrated mqtt).
+
+## 1.0.7 - 2026-01-24
+
+### Added
 - Icons for this app
 
 ### Changed

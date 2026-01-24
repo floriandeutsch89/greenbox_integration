@@ -1,0 +1,38 @@
+#include <tunables/global>
+
+profile greenbox_bridge_addon flags=(attach_disconnected,mediate_deleted) {
+  #include <abstractions/base>
+  #include <abstractions/python>
+  #include <abstractions/nameservice>
+
+  # Allow read access to the application code
+  /app/** r,
+  
+  # Allow read/write access to the persistent data directory
+  /data/** rw,
+
+  # Allow execution of Python and system binaries
+  /usr/bin/python3.13 ix,
+  /usr/bin/gosu ix,
+  /bin/sh ix,
+  /bin/dash ix,
+  /usr/bin/dash ix,
+
+  # Bluetooth/DBus Access
+  # Required for bleak to talk to the system bus
+  /run/dbus/system_bus_socket rw,
+  /sys/class/bluetooth/ r,
+  /sys/class/bluetooth/** r,
+
+  # Temporary and System files
+  /tmp/** rw,
+  /dev/null rw,
+  /dev/urandom r,
+  /etc/ld.so.cache r,
+  /usr/lib/** r,
+  /lib/** r,
+
+  # Capability for network/bluetooth (Matches your privileged flags)
+  capability net_admin,
+  capability net_raw,
+}

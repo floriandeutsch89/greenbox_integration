@@ -9,16 +9,18 @@ arch:
 init: false
 startup: "services"
 boot: "auto"
-host_network: true
+apparmor: true
+host_network: false
 # DBus is required for Bleak/Bluetooth
 host_dbus: true
 # Map /data for persistent storage
+read_only: true # Makes the root filesystem read-only. can still write to /data
 map:
   - config:rw
 # This allows the container to access Bluetooth hardware
 privileged:
-  - SYS_ADMIN
   - NET_ADMIN
+  - NET_RAW
 
 options:
   ble_address: "8C:4B:14:84:DB:72"

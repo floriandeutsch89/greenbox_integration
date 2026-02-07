@@ -1,3 +1,8 @@
+## 1.10.2 - 2026-02-07
+
+### Fixed
+- Box randomly turned of its lights ignoring the timer
+
 ## 1.10.0 - 2026-01-24
 
 ### Removed

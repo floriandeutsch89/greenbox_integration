@@ -178,7 +178,12 @@ class GreenboxBridge:
             self.mqtt_client.on_message = self.on_mqtt_message
             self.mqtt_client.connect(CONF['mqtt_host'], 1883)
             self.mqtt_client.subscribe(f"{CONF['device_id']}/light/set")
-            self.send_discovery()
+            logger.info("MQTT-Verbindung erfolgreich.")
+            
+            # Send discovery only once at startup
+            if not self.discovery_sent:
+                self.send_discovery()
+                self.discovery_sent = True
         except Exception as e:
             logger.error(f"MQTT-Verbindung fehlgeschlagen: {e}")
             sys.exit(1)
@@ -187,28 +192,31 @@ class GreenboxBridge:
             self.mqtt_client.loop(timeout=0.1)
             await asyncio.sleep(0.1)
 
-    async def run(self):
-        """Haupt-Loop: Hält MQTT und BLE am Laufen."""
-        asyncio.create_task(self.mqtt_loop())
-        
+    async def ble_loop(self):
+        """BLE Connection Loop."""
         while True:
             try:
-                logger.info(f"Verbinde zu {CONF['ble_address']}...")
+                logger.info(f"Verbinde zu BLE {CONF['ble_address']}...")
                 async with BleakClient(CONF['ble_address'], timeout=20.0) as client:
                     self.ble_client = client
                     await client.start_notify(UUID_DATA, self.handle_ble_notification)
-                    logger.info("BLE aktiv und verbunden. Warte auf NOTIFY-Daten...")
+                    logger.info("BLE verbunden.")
                     
                     while client.is_connected:
-                        # Wir schicken alle 60s ein "Keep Alive" (Status-Abfrage ID 4f)
-                        # Das triggert die Box, Daten zu senden, falls sie still ist
-                        await client.write_gatt_char(UUID_DATA, bytes.fromhex("ee4f0000d4ef"))
-                        await asyncio.sleep(60)
+                        await asyncio.sleep(1)
 
             except Exception as e:
-                logger.error(f"Verbindungsfehler: {e}. Reconnect in 30s...")
+                logger.error(f"BLE-Fehler: {e}. Reconnect in 30s...")
                 self.ble_client = None
                 await asyncio.sleep(30)
+
+    async def run(self):
+        """Haupt-Loop: Startet MQTT und BLE parallel."""
+        logger.info("Starte Greenbox Bridge...")
+        await asyncio.gather(
+            self.mqtt_loop(),
+            self.ble_loop()
+        )
 
 if __name__ == "__main__":
     bridge = GreenboxBridge()
